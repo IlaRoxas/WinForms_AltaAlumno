@@ -76,12 +76,22 @@ namespace Escuela
                 string fechaNacimientoFormateada = fechaNacimiento.ToString("dd/MM/yyyy");
                 dataGridView1.Rows.Add(new object[] { nombre, apellido, fechaNacimientoFormateada, dni, "Eliminar" });
 
-                Limpiar limpiador = new Limpiar();
-                limpiador.BorrarCampos(splitContainer1);
+                BorrarCampos(splitContainer1);
             }
             else
             {
                 MessageBox.Show("La edad no cumple con los requisitos.");
+            }
+        }
+
+        public void BorrarCampos(SplitContainer splitContainer)
+        {
+            foreach (var upperControl in splitContainer.Panel1.Controls)
+            {
+                if (upperControl is TextBox upperTextBox)
+                {
+                    upperTextBox.Clear();
+                }
             }
         }
 

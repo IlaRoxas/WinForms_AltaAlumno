@@ -86,6 +86,7 @@ namespace Escuela
             // 
             // dtpFN
             // 
+            this.dtpFN.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFN.Location = new System.Drawing.Point(502, 19);
             this.dtpFN.Name = "dtpFN";
             this.dtpFN.Size = new System.Drawing.Size(200, 20);
