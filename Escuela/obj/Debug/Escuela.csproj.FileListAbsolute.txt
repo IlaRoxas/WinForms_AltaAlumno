@@ -21,3 +21,4 @@ C:\Users\Facu\Desktop\Seminario 1\Escuela\Escuela\bin\Debug\MySql.Data.xml
 C:\Users\Facu\Desktop\Seminario 1\Escuela\Escuela\obj\Debug\Escuela.csproj.SuggestedBindingRedirects.cache
 C:\Users\Facu\Desktop\Seminario 1\Escuela\Escuela\obj\Debug\Escuela.exe.config
 C:\Users\Facu\Desktop\Seminario 1\Escuela\Escuela\obj\Debug\Escuela.csproj.CopyComplete
+C:\Users\Facu\Desktop\Seminario 1\escuela\Escuela\bin\Debug\MaterialSkin.dll
