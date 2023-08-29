@@ -49,6 +49,10 @@ namespace Escuela
                         // Los campos nombre, apellido, DNI y edad cumplen con los requisitos
                         // Agrego los datos al DataGridView
                         dataGridView1.Rows.Add(new object[] { nombre, apellido, fechaNacimientoFormateada, dni, "Eliminar" });
+                        
+                        Limpiar limpiador = new Limpiar();
+                        limpiador.BorrarCampos(splitContainer1);
+
                     }
                     else
                     {
