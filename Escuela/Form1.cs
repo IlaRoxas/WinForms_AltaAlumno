@@ -26,52 +26,65 @@ namespace Escuela
             DateTime fechaNacimiento = dtpFN.Value;
             string fechaNacimientoFormateada = fechaNacimiento.ToString("dd/MM/yyyy");
 
-            // Validar que el nombre y el apellido contenga solo letras y tenga más de 3 caracteres
-            if (System.Text.RegularExpressions.Regex.IsMatch(nombre, "^[a-zA-Z]{3,}$")&& 
-                System.Text.RegularExpressions.Regex.IsMatch(apellido, "^[a-zA-Z]{3,}$")&&
-                System.Text.RegularExpressions.Regex.IsMatch(dniString, "^[0-9]{8}$"))// Validar que el dni tenga 8 caracteres
+            
+            if (ValidarNombreApellido(nombre, apellido) && ValidarDNI(dniString))
             {
-
                 int dni;
-                if (int.TryParse(dniString, out dni))//Se convierte el texto a un valor entero
-                                                    //utilizando int.TryParse().
-                                                   //Si la conversión es exitosa, el valor se almacena en 'dni'.
-                {
-                    // Calcular la edad
-                    int edad = DateTime.Now.Year - fechaNacimiento.Year;
-                    if (DateTime.Now.Month < fechaNacimiento.Month || (DateTime.Now.Month == fechaNacimiento.Month && DateTime.Now.Day < fechaNacimiento.Day))
-                    {
-                        edad--;
-                    }
-                    // Validar la edad entre 8 y 60 años
-                    if (edad >= 16 && edad <= 60)
-                    {
-                        // Los campos nombre, apellido, DNI y edad cumplen con los requisitos
-                        // Agrego los datos al DataGridView
-                        dataGridView1.Rows.Add(new object[] { nombre, apellido, fechaNacimientoFormateada, dni, "Eliminar" });
-                        
-                        Limpiar limpiador = new Limpiar();
-                        limpiador.BorrarCampos(splitContainer1);
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("La edad debe estar entre 16 y 60 años.");
-                    }
+                if (int.TryParse(dniString, out dni))
+                {
+                    AgregarPersona(nombre, apellido, fechaNacimiento, dni);
                 }
                 else
                 {
-                    MessageBox.Show("El DNI debe ser un número válido.");
+                    MessageBox.Show("DNI inválido.");
                 }
             }
             else
             {
-                MessageBox.Show("El nombre, el apellido y el DNI deben cumplir con los requisitos.");
+                MessageBox.Show("Nombre, apellido o DNI inválido(s).");
             }
 
             dataBase.Conexion();
         }
-        
+        private bool ValidarNombreApellido(string nombre, string apellido)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(nombre, "^[a-zA-Z]{3,}$") &&
+                   System.Text.RegularExpressions.Regex.IsMatch(apellido, "^[a-zA-Z]{3,}$");
+        }
+
+        private bool ValidarDNI(string dniString)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(dniString, "^[0-9]{8}$");
+        }
+
+        private int CalcularEdad(DateTime fechaNacimiento)
+        {
+            int edad = DateTime.Now.Year - fechaNacimiento.Year;
+            if (DateTime.Now.Month < fechaNacimiento.Month || (DateTime.Now.Month == fechaNacimiento.Month && DateTime.Now.Day < fechaNacimiento.Day))
+            {
+                edad--;
+            }
+            return edad;
+        }
+        private void AgregarPersona(string nombre, string apellido, DateTime fechaNacimiento, int dni)
+        {
+            int edad = CalcularEdad(fechaNacimiento);
+
+            if (edad >= 16 && edad <= 60)
+            {
+                string fechaNacimientoFormateada = fechaNacimiento.ToString("dd/MM/yyyy");
+                dataGridView1.Rows.Add(new object[] { nombre, apellido, fechaNacimientoFormateada, dni, "Eliminar" });
+
+                Limpiar limpiador = new Limpiar();
+                limpiador.BorrarCampos(splitContainer1);
+            }
+            else
+            {
+                MessageBox.Show("La edad no cumple con los requisitos.");
+            }
+        }
+
         //Este método maneja el evento CellClick del DataGridView. 
         //Si se hace clic en una celda de la columna "Eliminar", elimina la fila correspondiente de la tabla, 
         //lo que permite al usuario eliminar registros haciendo clic en esa celda específica.

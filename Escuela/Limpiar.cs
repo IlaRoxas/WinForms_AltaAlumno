@@ -9,19 +9,16 @@ namespace Escuela
 {
     class Limpiar
     {
-        public void BorrarCampos(Control control)
+        public void BorrarCampos(SplitContainer splitContainer)
         {
-            if (control is SplitContainer splitContainer)
+            foreach (var upperControl in splitContainer.Panel1.Controls)
             {
-                foreach (var upperControl in splitContainer.Panel1.Controls)
+                if (upperControl is TextBox upperTextBox)
                 {
-                    if (upperControl is TextBox upperTextBox)
-                    {
-                        upperTextBox.Clear();
-                    }
+                    upperTextBox.Clear();
                 }
-
             }
         }
+
     }
 }
